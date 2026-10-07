@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span>
+  </button>
+
+  <div class="dashboard">
+
+    <!-- ═══════════════════════════════
+         HEADER CARD
+    ═══════════════════════════════ -->
+    <div class="card card-header">
+      <div class="header-inner">
+        <div class="clock-block">
+          <div class="clock" id="clock">00:00:00</div>
+          <div class="date" id="date"></div>
+        </div>
+        <div class="greeting-block">
+          <div class="greeting" id="greeting">Good Morning</div>
+          <div class="name-row">
+            <span class="greeting-name" id="greetingName"></span>
+            <button class="icon-btn" id="btnEditName" title="Edit name" aria-label="Edit name">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+          </div>
+          <!-- Name input panel -->
+          <div class="name-panel" id="namePanelWrap">
+            <input type="text" id="nameInput" class="glass-input name-input" placeholder="Your name..." maxlength="30" autocomplete="off" />
+            <button class="btn btn-accent btn-sm" id="btnSaveName">Save</button>
+            <button class="btn btn-ghost btn-sm" id="btnCancelName">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════
+         MIDDLE ROW
+    ═══════════════════════════════ -->
+    <div class="middle-row">
+
+      <!-- Focus Timer Card -->
+      <div class="card card-timer">
+        <div class="card-title-row">
+          <h2 class="card-title">
+            <span class="title-icon">⏱</span> Focus Timer
+          </h2>
+          <!-- Challenge 4: Pomodoro duration badge -->
+          <span class="duration-badge" id="durationBadge">25 min</span>
+        </div>
+
+        <!-- Timer ring + display -->
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="ring-track" cx="60" cy="60" r="52"/>
+            <circle class="ring-progress" id="ringProgress" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="timer-display" id="timerDisplay">25:00</div>
+        </div>
+
+        <!-- Controls: Start / Stop / Reset -->
+        <div class="timer-controls">
+          <button class="btn btn-accent" id="btnStart">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Start
+          </button>
+          <button class="btn btn-secondary" id="btnStop">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
+            Stop
+          </button>
+          <button class="btn btn-ghost" id="btnReset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reset
+          </button>
+        </div>
+
+        <!-- Challenge 4: Duration Presets + Custom -->
+        <div class="duration-section">
+          <p class="duration-label">Set Duration</p>
+          <div class="duration-presets">
+            <button class="dur-btn" data-min="15">15m</button>
+            <button class="dur-btn active" data-min="25">25m</button>
+            <button class="dur-btn" data-min="50">50m</button>
+            <button class="dur-btn custom-trigger" id="btnCustomDur">Custom</button>
+          </div>
+          <div class="custom-dur-row" id="customDurRow">
+            <input type="number" id="customDurInput" class="glass-input dur-input" min="1" max="180" placeholder="Min" />
+            <button class="btn btn-accent btn-sm" id="btnSetCustom">Set</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks Card -->
+      <div class="card card-tasks">
+        <div class="card-title-row">
+          <h2 class="card-title">
+            <span class="title-icon">✅</span> Tasks
+          </h2>
+          <!-- Challenge 5: Sort dropdown -->
+          <div class="sort-wrap">
+            <label class="sort-label" for="taskSort">Sort</label>
+            <select class="sort-select" id="taskSort" aria-label="Sort tasks">
+              <option value="default">Default</option>
+              <option value="az">A → Z</option>
+              <option value="za">Z → A</option>
+              <option value="done">Done Last</option>
+              <option value="undone">Undone First</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="task-input-row">
+          <input type="text" id="taskInput" class="glass-input task-input" placeholder="Add a new task..." autocomplete="off" />
+          <button class="btn btn-accent" id="btnAddTask">Add</button>
+        </div>
+        <div class="feedback-msg" id="taskError" role="alert"></div>
+        <ul class="task-list" id="taskList"></ul>
+      </div>
+
+    </div><!-- /middle-row -->
+
+    <!-- ═══════════════════════════════
+         QUICK LINKS CARD
+    ═══════════════════════════════ -->
+    <div class="card card-links">
+      <h2 class="card-title">
+        <span class="title-icon">🔗</span> Quick Links
+      </h2>
+      <div class="link-input-row">
+        <input type="text" id="linkName" class="glass-input link-input" placeholder="Link name" autocomplete="off" />
+        <input type="text" id="linkUrl" class="glass-input link-input" placeholder="URL (e.g. google.com)" autocomplete="off" />
+        <button class="btn btn-accent" id="btnAddLink">Add Link</button>
+      </div>
+      <div class="feedback-msg" id="linkError" role="alert"></div>
+      <div class="links-list" id="linksList"></div>
+    </div>
+
+  </div><!-- /dashboard -->
+
+  <script src="js/script.js"></script>
+</body>
+</html>
